@@ -27,6 +27,10 @@ app.get("/", function(req, res){
     res.sendFile(__dirname + '/public/index.html');
 });
 
+app.get("*", (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
+
 app.listen(porta, () => {
     console.log("Servidor iniciado na porta " + porta + " em " + datahora.getData() + " às " + datahora.getHora());
 });

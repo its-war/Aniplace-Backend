@@ -15,6 +15,7 @@
     "cors": "^2.8.5",
     "dotenv-safe": "^8.2.0",
     "express": "^4.17.3",
+    "i": "^0.3.7",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
@@ -33,6 +34,5 @@
   "bugs": {
     "url": "https://github.com/its-war/aniplace-backend/issues"
   },
-  "homepage": "https://github.com/its-war/aniplace-backend#readme",
-  "devDependencies": {}
+  "homepage": "https://github.com/its-war/aniplace-backend#readme"
 }
