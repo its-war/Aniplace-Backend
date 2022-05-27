@@ -35,4 +35,4 @@ app.listen(porta, () => {
     console.log("Servidor iniciado na porta " + porta + " em " + datahora.getData() + " às " + datahora.getHora());
 });
 
-//TODO fazer rotas de fansub e genero (cadastro e listagem)
+// TODO sempre que for upar o projeto, não esqueça de atualizar os arquivos mail.js

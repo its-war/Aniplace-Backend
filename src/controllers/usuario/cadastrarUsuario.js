@@ -2,6 +2,7 @@ module.exports = (req, res) => {
     const conn = require('../../config/database');
     const bcrypt = require('bcryptjs');
     const mailer = require('../../plugins/mail');
+    const jwt = require('jsonwebtoken');
     let sql = "insert into usuario values (default, ?,?,?,?,?, default);";
     let nome = req.body.nome;
     let email = req.body.email;
@@ -80,7 +81,9 @@ module.exports = (req, res) => {
     conn.query(sql, [nome, email, novoNomeUsuario, senhaHash, chave], (err, result, fields) => {
         if(!err){
             console.log(result);
-            mailer.enviarEmail(email, "Ative sua conta", chave);
+            const token = jwt.sign({email: email, chave: chave}, process.env.SECRET);
+            let fullUrl = req.protocol + '://' + req.get('host') + '/usuario/ativar/';
+            mailer.enviarEmail(email, "Ative sua conta", token, fullUrl);
             return res.sendStatus(200);
         }else{
             return res.send("Falha ao cadastrar.");

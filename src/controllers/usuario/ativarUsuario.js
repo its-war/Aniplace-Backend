@@ -1,12 +1,19 @@
+const conn = require("../../config/database");
 module.exports = (req, res) => {
     const conn = require('../../config/database');
-    let sql = "update usuario set ativo = 1 where chave=?;";
-    let chave = req.body.chave;
-    conn.query(sql, [chave], (err, result, field) => {
-        if(result.affectedRows === 1){
-            res.sendStatus(200);
+    const jwt = require('jsonwebtoken');
+    jwt.verify(req.params.chave, process.env.SECRET, (err, decoded) => {
+        if(err){
+            res.redirect('/notfound');
         }else{
-            res.sendStatus(401);
+            let sql = "update usuario set ativo = 1 where email=? and ativo=0 and chave=?;";
+            conn.query(sql, [decoded.email, decoded.chave], (err, result, field) => {
+                if(result.affectedRows === 1){
+                    res.redirect('/login/ativado');
+                }else{
+                    res.redirect('/notfound');
+                }
+            });
         }
     });
 };
