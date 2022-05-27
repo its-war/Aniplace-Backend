@@ -21,7 +21,7 @@ const usuarioRouter = require('./src/routes/usuarioRouter');
 app.use('/login', loginRouter);
 app.use('/usuario', usuarioRouter);
 
-const porta = process.env.PORT || 80;
+const porta = process.env.PORT || 8888;
 
 app.get("/", function(req, res){
     res.sendFile(__dirname + '/public/index.html');
