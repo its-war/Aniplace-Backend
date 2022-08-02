@@ -15,24 +15,18 @@
     "cors": "^2.8.5",
     "dotenv-safe": "^8.2.0",
     "express": "^4.17.3",
+    "express-async-errors": "^3.1.1",
     "i": "^0.3.7",
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.6",
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.3",
-    "nodemon": "^2.0.16",
+    "nodemon": "^2.0.19",
     "sequelize": "^6.19.0"
   },
   "description": "\"# aniplace-backend\" \r \\\r \\\r **Ao baixar o repositório, escreva** `npm init` **no terminal, dentro da pasta do projeto, para baixar todas as dependências**",
   "engines": {
-    "node": "14.x"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/its-war/aniplace-backend.git"
-  },
-  "bugs": {
-    "url": "https://github.com/its-war/aniplace-backend/issues"
-  },
-  "homepage": "https://github.com/its-war/aniplace-backend#readme"
+    "node": "16.x"
+  }
 }
