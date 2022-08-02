@@ -8,6 +8,10 @@ const RankingSchema = new Schema({
         type: Number,
         require: true
     },
+    anime: {
+        type: Schema.Types.ObjectId,
+        ref: 'anime'
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'usuario'

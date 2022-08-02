@@ -10,7 +10,7 @@ const AnimeSchema = new Schema({
     },
     nomeAlternativo: {
         type: String,
-        default: null
+        default: ''
     },
     sinopse: {
         type: String,
@@ -33,9 +33,6 @@ const AnimeSchema = new Schema({
     ],
     temporada: [
         {type: Schema.Types.ObjectId, ref: 'temporada'}
-    ],
-    notas: [
-        {type: Schema.Types.ObjectId, ref: 'ranking'}
     ]
 
 });

@@ -30,8 +30,8 @@ const checkToken = require('./src/middlewares/login/checkToken');
 //Rotas Principais
 app.use('/login', loginRouter);
 app.use('/usuario', usuarioRouter);
-app.use('/destaque', destaqueRouter);
-app.use('/anime', animeRouter);
+app.use('/destaque', checkToken, destaqueRouter);
+app.use('/anime', checkToken, animeRouter);
 
 //Middleware de erro do Express
 app.use((err, req, res, next) => {
@@ -43,7 +43,7 @@ app.use((err, req, res, next) => {
 
 //Rotas que é necessário estar logado
 app.use('/admin', adminMiddleware, adminRouter); //Rota de admin só é acessada se User estiver referênciado na coleção admin
-app.use('/ranking', checkToken, rankRouter);
+app.use('/ranking', rankRouter);
 
 app.get("/", function(req, res){
     res.sendFile(__dirname + '/public/index.html');
