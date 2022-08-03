@@ -25,6 +25,6 @@ module.exports = async (req, res) => {
         }
         let nota = produto / soma;
         nota = nota.toFixed(2);
-        res.send({nota: nota});
+        res.send({nota: nota, quantidade: rankList.length});
     });
 }
