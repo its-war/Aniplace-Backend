@@ -1,4 +1,4 @@
 "# aniplace-backend" 
 \
 \
-**Ao baixar o repositório, escreva** `npm init` **no terminal, dentro da pasta do projeto, para baixar todas as dependências**
+**Ao baixar o repositório, escreva** `npm install` **no terminal, dentro da pasta do projeto, para carregar todas as dependências**
