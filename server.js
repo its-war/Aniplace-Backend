@@ -61,4 +61,4 @@ app.listen(porta, () => {
 
 // TODO terminar script dos destaques ------------------------ <<<<<<<<<<<<<<
 
-// TODO criar rotas de 'anime'
+// TODO criar rotas de 'usuario'

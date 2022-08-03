@@ -16,7 +16,7 @@ module.exports = (req, res) => {
             anime.markModified('acessos');
             anime.acessos = anime.acessos + 1;
             anime.save();
-            res.send({anime: anime});
+            res.send({anime: anime, nota: req.nota});
         }else{
             res.send({anime: {isSet: false}});
         }
