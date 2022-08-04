@@ -1,14 +1,20 @@
 const Anime = require('../../../models/Anime');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     let nome = req.body.nome;
+    let nomeAlternativo = req.body.nomeAlternativo;
     let sinopse = req.body.sinopse;
     let foto = req.body.foto;
+    let cover = req.body.cover;
+    let generos = req.body.generos;
 
-    new Anime({
+    await new Anime({
         nome: nome,
+        nomeAlternativo: nomeAlternativo,
         sinopse: sinopse,
-        foto: foto
+        foto: foto,
+        cover: cover,
+        generos: generos
     }).save().then((doc) => {
         req.anime = doc;
         next();
