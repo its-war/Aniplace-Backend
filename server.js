@@ -1,3 +1,6 @@
+//TimeZone para São Paulo
+process.env.TZ = 'America/Sao_Paulo';
+
 //Importações Principais
 const express = require('express');
 require('express-async-errors');
