@@ -1,4 +1,5 @@
 const mongoose = require('../config/database');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
@@ -36,6 +37,8 @@ const AnimeSchema = new Schema({
     ]
 
 });
+
+AnimeSchema.plugin(mongoosePaginate);
 
 mongoose.model('anime', AnimeSchema);
 

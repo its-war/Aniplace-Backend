@@ -4,7 +4,7 @@ const Temporada = require('../../models/Temporada');
 const Episodio = require('../../models/Episodio');
 module.exports = (req, res) => {
     if(req.params.id.length !== 24){
-        return res.send({anime: {isSet: false}});
+        return res.send({anime: {isNotSet: true}});
     }
     Anime.findById(req.params.id).populate({
         path: 'temporada', model: Temporada,
@@ -18,7 +18,7 @@ module.exports = (req, res) => {
             anime.save();
             res.send({anime: anime, nota: req.nota});
         }else{
-            res.send({anime: {isSet: false}});
+            return res.send({anime: {isNotSet: true}});
         }
     });
 }

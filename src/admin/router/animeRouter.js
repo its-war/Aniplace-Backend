@@ -9,4 +9,6 @@ animeRouter.post('/cadastrarAnime', cadastrarAnime, fistTemporada);
 animeRouter.post('/listarAnime', listarAnime);
 animeRouter.post('/addFansub', addFansub);
 
+//TODO configurar 'fistTemporada' para cadastrar qualquer temporada, não apenas a primeira
+
 module.exports = animeRouter;

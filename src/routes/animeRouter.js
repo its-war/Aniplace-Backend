@@ -4,7 +4,7 @@ const listarAnime = require('../controllers/anime/listarAnime');
 
 const getUserRank = require('../middlewares/usuario/getUserRank');
 
-animeRouter.get('/listar', listarAnimes);
+animeRouter.get('/listar/:pagina', listarAnimes);
 animeRouter.get('/listar/:id/:iduser', getUserRank, listarAnime);
 
 module.exports = animeRouter;
