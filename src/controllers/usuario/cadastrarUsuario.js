@@ -11,6 +11,8 @@ module.exports = (req, res) => {
     let senhaRepetida = req.body.senharepetida;
     let version = req.version;
 
+    nome = nome.trim();
+
     nome = nome.split(" ");
     if(nome.length < 2){
         return res.send({cadastro: false, msg: "Necessário pelo menos um nome e um sobrenome.", erros: null});
