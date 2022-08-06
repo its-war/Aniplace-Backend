@@ -4,10 +4,6 @@ const ObjectId = Schema.ObjectId;
 
 const EpisodioSchema = new Schema({
     idEpisodio: ObjectId,
-    nome: {
-        type: String,
-        default: null
-    },
     numero: {
         type: Number,
         require: true
@@ -16,21 +12,17 @@ const EpisodioSchema = new Schema({
         type: String,
         require: true
     },
-    resumo: {
-        type: String,
-        default: null
-    },
     linkFullHD: {
         type: String,
-        default: null
+        default: ''
     },
     linkHD: {
         type: String,
-        default: null
+        default: ''
     },
     linkSD: {
         type: String,
-        default: null
+        default: ''
     },
     online: {
         type: String,
