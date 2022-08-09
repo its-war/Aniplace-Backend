@@ -29,6 +29,10 @@ const AnimeSchema = new Schema({
         type: Number,
         default: 0
     },
+    ano: {
+        type: Number,
+        default: 0
+    },
     generos: [
         {type: Schema.Types.ObjectId, ref: 'genero'}
     ],
