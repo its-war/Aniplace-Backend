@@ -12,6 +12,26 @@ const EpisodioSchema = new Schema({
         type: String,
         require: true
     },
+    aberturaInicio: {
+        type: Number,
+        require: true
+    },
+    aberturaFim: {
+        type: Number,
+        require: true
+    },
+    encerramentoInicio: {
+        type: Number,
+        default: 0
+    },
+    encerramentoFim: {
+        type: Number,
+        default: 0
+    },
+    tempo: {
+        type: Number,
+        require: true
+    },
     linkFullHD: {
         type: String,
         default: ''

@@ -26,6 +26,7 @@ const destaqueRouter = require('./src/routes/destaqueRouter');
 const animeRouter = require('./src/routes/animeRouter');
 const rankRouter = require('./src/routes/rankRouter');
 const generoRouter = require('./src/routes/generoRouter');
+const episodioRouter = require('./src/routes/episodioRouter');
 
 //Importação de Middlewares
 const adminMiddleware = require('./src/middlewares/adminLoginMiddleware');
@@ -37,6 +38,7 @@ app.use('/usuario', usuarioRouter);
 app.use('/destaque', checkToken, destaqueRouter);
 app.use('/anime', checkToken, animeRouter);
 app.use('/genero', checkToken, generoRouter);
+app.use('/episodio', checkToken, episodioRouter);
 
 //Middleware de erro do Express
 app.use((err, req, res, next) => {

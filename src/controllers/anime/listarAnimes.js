@@ -1,6 +1,5 @@
 const Anime = require('../../models/Anime');
 module.exports = async (req, res) => {
-    console.log(req.body);
     let pagina = req.body.pagina;
     let labels = {
         totalDocs: 'totalAnimes',
@@ -55,7 +54,7 @@ module.exports = async (req, res) => {
         }, {
             projection: '_id nome foto',
             page: pagina,
-            limit: 1,
+            limit: 10,
             sort: {nome: "asc"},
             customLabels: labels
         }, (err, result) => {
