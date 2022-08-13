@@ -47,6 +47,10 @@ const EpisodioSchema = new Schema({
     online: {
         type: String,
         require: true
+    },
+    anime: {
+        type: Schema.Types.ObjectId,
+        ref: 'anime'
     }
 });
 
