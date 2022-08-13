@@ -8,6 +8,10 @@ const EpisodioSchema = new Schema({
         type: Number,
         require: true
     },
+    temporada: {
+        type: Number,
+        require: true
+    },
     thumb: {
         type: String,
         require: true

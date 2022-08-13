@@ -4,7 +4,7 @@ module.exports = async (req, res) => {
     await Episodio.find()
         .sort({_id: "desc"})
         .limit(10)
-        .select('numero anime thumb')
+        .select('numero anime thumb temporada')
         .populate('anime', 'nome _id', Anime).then((episodios) => {
         res.send({episodios: episodios});
     });
