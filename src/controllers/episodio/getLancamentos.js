@@ -6,6 +6,6 @@ module.exports = async (req, res) => {
         .limit(10)
         .select('numero anime thumb')
         .populate('anime', 'nome _id', Anime).then((episodios) => {
-        res.send(episodios);
+        res.send({episodios: episodios});
     });
 }
