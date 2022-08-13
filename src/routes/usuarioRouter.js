@@ -11,11 +11,12 @@ const ativarNovaSenha = require('../controllers/usuario/ativarNovaSenha');
 const emailCheck = require('../middlewares/cadastro/emailCheck');
 const usernameCheck = require('../middlewares/cadastro/usernameCheck');
 const listarUpdate = require('../middlewares/update/getVersion');
+const checkToken = require('../middlewares/login/checkToken');
 
 usuarioRouter.post('/cadastrarUsuario', emailCheck, usernameCheck, listarUpdate, cadastrarUsuario);
 usuarioRouter.get('/ativar/:chave', ativarUsuario);
-usuarioRouter.get('/topUsers', topUsers);
-usuarioRouter.put('/updateVersion', listarUpdate, updateVersion);
+usuarioRouter.get('/topUsers', checkToken, topUsers);
+usuarioRouter.put('/updateVersion', checkToken, listarUpdate, updateVersion);
 usuarioRouter.put('/esqueceuSenha', forgotPassWord);
 usuarioRouter.get('/esqueceuSenha/:token', ativarNovaSenha);
 
