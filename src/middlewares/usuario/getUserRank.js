@@ -11,6 +11,7 @@ module.exports = async (req, res, next) => {
         if(rank){
             req.nota = rank;
         }
+        req.userId = req.params.iduser;
         next();
     });
 }

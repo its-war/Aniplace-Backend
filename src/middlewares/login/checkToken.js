@@ -17,6 +17,7 @@ module.exports = (req, res, next) => {
             let user = Usuario.findOne({chave: decoded.chave}).exec();
             user.then((doc) => {
                 if(doc){
+                    req.userData = doc;
                     next();
                 }else{
                     return res.send({auth: false});
