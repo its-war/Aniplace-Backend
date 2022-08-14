@@ -1,3 +1,4 @@
+require('dotenv-safe').config();
 const Usuario = require('../../models/Usuario');
 const EsqueceuSenha = require('../../models/EsqueceuSenha');
 const bcrypt = require('bcryptjs');

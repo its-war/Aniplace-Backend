@@ -1,3 +1,4 @@
+require('dotenv-safe').config();
 const Usuario = require("../../models/Usuario");
 const bcrypt = require('bcryptjs');
 const mailer = require('../../plugins/mail');
@@ -55,8 +56,7 @@ module.exports = (req, res) => {
         version: version
     }).save().then(() => {
         const token = jwt.sign({email: email, chave: chave}, process.env.SECRET);
-        //req.secureProtocol
-        let fullUrl = req.protocol + '://' + req.get('host') + '/usuario/ativar/';
+        let fullUrl = process.env.URLBASE + '/usuario/ativar/';
         mailer.enviarEmail(email, "Ative sua conta", token, fullUrl, nome, req.email, req.username);
         return res.send({cadastro: true});
     }).catch((err) => {

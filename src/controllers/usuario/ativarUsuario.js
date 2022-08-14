@@ -1,3 +1,4 @@
+require('dotenv-safe').config();
 module.exports = (req, res) => {
     const Usuario = require('../../models/Usuario');
     const jwt = require('jsonwebtoken');
