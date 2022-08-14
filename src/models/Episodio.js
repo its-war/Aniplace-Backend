@@ -1,4 +1,5 @@
 const mongoose = require('../config/database');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
 
@@ -57,6 +58,8 @@ const EpisodioSchema = new Schema({
         ref: 'anime'
     }
 });
+
+EpisodioSchema.plugin(mongoosePaginate);
 
 mongoose.model('episodio', EpisodioSchema);
 
