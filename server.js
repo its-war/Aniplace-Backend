@@ -36,7 +36,7 @@ const checkToken = require('./src/middlewares/login/checkToken');
 app.use('/login', loginRouter);
 app.use('/usuario', usuarioRouter);
 app.use('/destaque', checkToken, destaqueRouter);
-app.use('/anime', checkToken, animeRouter);
+app.use('/anime', animeRouter);
 app.use('/genero', checkToken, generoRouter);
 app.use('/episodio', checkToken, episodioRouter);
 

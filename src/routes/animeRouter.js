@@ -6,11 +6,12 @@ const animesMaisAcessados = require('../controllers/anime/animesMaisAcessados');
 const fastSearch = require('../controllers/anime/fastSearch');
 
 const getUserRank = require('../middlewares/usuario/getUserRank');
+const checkToken = require('../middlewares/login/checkToken');
 
-animeRouter.post('/listar', listarAnimes);
-animeRouter.get('/listar/:id/:iduser', getUserRank, listarAnime);
-animeRouter.get('/getMenorAno', getMenorAno);
-animeRouter.get('/animesMaisAcessados', animesMaisAcessados);
-animeRouter.get('/fastSearch/:value', fastSearch);
+animeRouter.post('/listar', checkToken, listarAnimes);
+animeRouter.get('/listar/:id/:iduser', checkToken, getUserRank, listarAnime);
+animeRouter.get('/getMenorAno', checkToken, getMenorAno);
+animeRouter.get('/animesMaisAcessados', checkToken, animesMaisAcessados);
+animeRouter.get('/fastSearch/:value', checkToken, fastSearch);
 
 module.exports = animeRouter;

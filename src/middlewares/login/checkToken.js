@@ -2,7 +2,7 @@ require('dotenv-safe').config();
 const jwt = require('jsonwebtoken');
 const Usuario = require("../../models/Usuario");
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
     const token = req.headers['x-access-token'];
     if(!token){
         return res.send({auth: false});
