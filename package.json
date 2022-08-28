@@ -24,7 +24,8 @@
     "mysql2": "^2.3.3",
     "nodemailer": "^6.7.3",
     "nodemon": "^2.0.19",
-    "sequelize": "^6.19.0"
+    "sequelize": "^6.19.0",
+    "socket.io": "^4.5.1"
   },
   "description": "\"# aniplace-backend\" \r \\\r \\\r **Ao baixar o repositório, escreva** `npm init` **no terminal, dentro da pasta do projeto, para baixar todas as dependências**",
   "engines": {

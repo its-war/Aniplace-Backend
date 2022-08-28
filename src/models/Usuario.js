@@ -43,7 +43,41 @@ const UserSchema = new Schema({
     version: {
         type: Number,
         default: true
-    }
+    },
+    apelido: {
+        type: String,
+        default: ''
+    },
+    nascimento: {
+        type: Date,
+        default: null
+    },
+    sexo: {
+        type: Number,
+        default: 0
+    },
+    pronome: {
+        type: Number,
+        default: 0
+    },
+    animeFavorito: {
+        type: Schema.Types.ObjectId,
+        ref: 'anime'
+    },
+    localidade: {
+        type: String,
+        default: ''
+    },
+    biografia: {
+        type: String,
+        default: ''
+    },
+    amigos: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'usuario'
+        }
+    ]
 });
 
 mongoose.model('usuario', UserSchema);

@@ -19,5 +19,9 @@ usuarioRouter.get('/topUsers', checkToken, topUsers);
 usuarioRouter.put('/updateVersion', checkToken, listarUpdate, updateVersion);
 usuarioRouter.put('/esqueceuSenha', forgotPassWord);
 usuarioRouter.get('/esqueceuSenha/:token', ativarNovaSenha);
+usuarioRouter.get('/solicitarAmizade/:para', checkToken);
+usuarioRouter.get('/aceitarSolicitacao/:solicitacao', checkToken);
+usuarioRouter.get('/recusarSolicitacao/:solicitacao', checkToken);
+usuarioRouter.get('/desfazerAmizade/:idUser', checkToken);
 
 module.exports = usuarioRouter;

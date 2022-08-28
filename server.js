@@ -59,7 +59,10 @@ app.get("*", (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.listen(porta, () => {
+const server = require('http').createServer(app);
+const io = require('socket.io')(server);
+
+server.listen(porta, () => {
     console.clear();
     console.log("Servidor iniciado na porta " + porta + " em " + datahora.getData() + " às " + datahora.getHora());
 });

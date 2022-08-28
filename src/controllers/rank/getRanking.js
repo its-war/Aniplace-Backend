@@ -1,10 +1,11 @@
 const Ranking = require('../../models/Ranking');
+const Anime = require('../../models/Anime');
 module.exports = async (req, res) => {
     if(req.params.anime.length !== 24){
         return res.send({nota: null});
     }
 
-    await Ranking.find({anime: req.params.anime}, 'nota -_id').then((rankList) => {
+    await Ranking.find({anime: req.params.anime}, 'nota -_id').then(async (rankList) => {
         if(rankList.length < 1){
             return res.send({nota: null});
         }
@@ -24,6 +25,14 @@ module.exports = async (req, res) => {
             soma = soma + counts[i];
         }
         let nota = produto / soma;
+
+        await Anime.findById(req.params.anime).select('nota').then((a) => {
+            if(a.nota !== nota){
+                a.nota = nota;
+                a.save();
+            }
+        });
+
         nota = nota.toFixed(2);
         res.send({nota: nota, quantidade: rankList.length});
     });

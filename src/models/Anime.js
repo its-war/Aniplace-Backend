@@ -38,8 +38,11 @@ const AnimeSchema = new Schema({
     ],
     temporada: [
         {type: Schema.Types.ObjectId, ref: 'temporada'}
-    ]
-
+    ],
+    nota: {
+        type: Number,
+        default: 0
+    }
 });
 
 AnimeSchema.plugin(mongoosePaginate);
