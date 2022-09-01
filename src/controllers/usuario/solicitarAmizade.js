@@ -10,20 +10,29 @@ module.exports = async (req, res) => {
         de: req.userData._id,
         para: para
     }).then((solicitacao) => {
-        if(solicitacao){
+        if(solicitacao.length > 0){
             return res.send({solicitacao: false});
-        }
-    });
-
-    await Solicitacao.create({
-        de: req.userData._id,
-        para: para,
-        registro: datahora.getData() + '—' + datahora.getHora(),
-    }).then((solicitacao) => {
-        if(solicitacao){
-            return res.send({solicitacao: true});
         }else{
-            return res.send({solicitacao: false});
+            Solicitacao.find({
+                de: para,
+                para: req.userData._id
+            }).then((solicitacao) => {
+                if(solicitacao.length > 0){
+                    return res.send({solicitacao: false});
+                }else{
+                    Solicitacao.create({
+                        de: req.userData._id,
+                        para: para,
+                        registro: datahora.getData() + '—' + datahora.getHora(),
+                    }).then((solicitacao) => {
+                        if(solicitacao){
+                            res.redirect('/notification/solicitacao/' + para + '/' + solicitacao._id);
+                        }else{
+                            return res.send({solicitacao: false});
+                        }
+                    });
+                }
+            });
         }
     });
 }

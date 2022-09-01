@@ -5,6 +5,17 @@ process.env.TZ = 'America/Sao_Paulo';
 const express = require('express');
 require('express-async-errors');
 const app = express();
+const server = require('http').createServer(app);
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "http://localhost:8080",
+        methods: ["GET", "POST"],
+        transports: ['websocket', 'polling'],
+        credentials: true
+    },
+    allowEIO3: true
+});
+require('./src/requests/connect')(io);
 const cors = require('cors');
 const path = require("path");
 const bodyParser = require('body-parser');
@@ -17,6 +28,21 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 const porta = process.env.PORT || 80;
+
+//Rotas Especiais
+app.get('/notification/solicitacao/:para/:idSolicitacao', (req, res) => {
+    const Usuario = require('./src/models/Usuario');
+    let id = req.params.idSolicitacao;
+    let para = req.params.para;
+    Usuario.findById(para).then((user) => {
+        if(user){
+            io.to(user.idSocket).emit('solicitacao', {para: para, id: id});
+        }
+    });
+    //io.emit('solicitacao', {para: para, id: id});
+
+    res.send({solicitacao: true});
+});
 
 //Importações de Roteadores
 const adminRouter = require('./src/routes/adminRouter');
@@ -59,16 +85,7 @@ app.get("*", (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
-
 server.listen(porta, () => {
     console.clear();
     console.log("Servidor iniciado na porta " + porta + " em " + datahora.getData() + " às " + datahora.getHora());
 });
-
-// TODO sempre que for upar o projeto, não esqueça de atualizar os arquivos mail.js
-
-// TODO terminar script dos destaques ------------------------ <<<<<<<<<<<<<<
-
-// TODO criar rotas de 'usuario'

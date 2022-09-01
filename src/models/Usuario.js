@@ -77,7 +77,11 @@ const UserSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'usuario'
         }
-    ]
+    ],
+    idSocket: {
+        type: String,
+        default: ''
+    }
 });
 
 mongoose.model('usuario', UserSchema);

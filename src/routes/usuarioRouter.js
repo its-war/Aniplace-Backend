@@ -6,6 +6,9 @@ const topUsers = require('../controllers/usuario/topUsers');
 const updateVersion = require('../controllers/usuario/updateVersion');
 const forgotPassWord = require('../controllers/usuario/forgotPassWord');
 const ativarNovaSenha = require('../controllers/usuario/ativarNovaSenha');
+const solicitarAmizade = require('../controllers/usuario/solicitarAmizade');
+const getSolicitacoes = require('../controllers/usuario/getSolicitacoes');
+const getSolicitacao = require('../controllers/usuario/getSolicitacao');
 
 //middlewares
 const emailCheck = require('../middlewares/cadastro/emailCheck');
@@ -19,7 +22,9 @@ usuarioRouter.get('/topUsers', checkToken, topUsers);
 usuarioRouter.put('/updateVersion', checkToken, listarUpdate, updateVersion);
 usuarioRouter.put('/esqueceuSenha', forgotPassWord);
 usuarioRouter.get('/esqueceuSenha/:token', ativarNovaSenha);
-usuarioRouter.get('/solicitarAmizade/:para', checkToken);
+usuarioRouter.get('/solicitarAmizade/:para', checkToken, solicitarAmizade);
+usuarioRouter.get('/getSolicitacoes', checkToken, getSolicitacoes);
+usuarioRouter.get('/getSolicitacao/:id', checkToken, getSolicitacao);
 usuarioRouter.get('/aceitarSolicitacao/:solicitacao', checkToken);
 usuarioRouter.get('/recusarSolicitacao/:solicitacao', checkToken);
 usuarioRouter.get('/desfazerAmizade/:idUser', checkToken);
