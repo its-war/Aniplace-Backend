@@ -29,19 +29,40 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 const porta = process.env.PORT || 80;
 
+//Importação de Middlewares
+const adminMiddleware = require('./src/middlewares/adminLoginMiddleware');
+const checkToken = require('./src/middlewares/login/checkToken');
+
+//Importações do Model
+const Usuario = require('./src/models/Usuario');
+const Notification = require('./src/models/Notification');
+
 //Rotas Especiais
-app.get('/notification/solicitacao/:para/:idSolicitacao', (req, res) => {
-    const Usuario = require('./src/models/Usuario');
+app.get('/notification/solicitacao/:para/:idSolicitacao', checkToken, (req, res) => {
     let id = req.params.idSolicitacao;
     let para = req.params.para;
-    Usuario.findById(para).then((user) => {
+    Usuario.findById(para).select('idSocket').then((user) => {
         if(user){
             io.to(user.idSocket).emit('solicitacao', {para: para, id: id});
         }
     });
-    //io.emit('solicitacao', {para: para, id: id});
-
     res.send({solicitacao: true});
+});
+
+app.get('/notification/aceitarSolicitacao/:para/:notification', checkToken, (req, res) => {
+    let para = req.params.para;
+    let notification = req.params.notification;
+    Usuario.findById(para).select('idSocket').then((user) => {
+        if(user){
+            Notification.findById(notification).then((notification) => {
+                Usuario.findById(notification.metadado).select('nome').then((u) => {
+                    notification.texto = notification.texto.replace('-$$$-', u.nome);
+                    io.to(user.idSocket).emit('newNotification', {notification: notification});
+                });
+            });
+        }
+    });
+    res.send({amizade: true});
 });
 
 //Importações de Roteadores
@@ -53,10 +74,6 @@ const animeRouter = require('./src/routes/animeRouter');
 const rankRouter = require('./src/routes/rankRouter');
 const generoRouter = require('./src/routes/generoRouter');
 const episodioRouter = require('./src/routes/episodioRouter');
-
-//Importação de Middlewares
-const adminMiddleware = require('./src/middlewares/adminLoginMiddleware');
-const checkToken = require('./src/middlewares/login/checkToken');
 
 //Rotas Principais
 app.use('/login', loginRouter);

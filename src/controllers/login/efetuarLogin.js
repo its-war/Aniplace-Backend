@@ -30,7 +30,8 @@ module.exports = (req, res) => {
             id: req.user._id,
             fistname: req.user.nome.split(' ')[0],
             foto: req.user.foto,
-            ativo: req.user.ativo
+            ativo: req.user.ativo,
+            amigos: req.user.amigos
         },
         msg: req.msg,
         update: update

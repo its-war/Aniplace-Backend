@@ -9,6 +9,11 @@ const ativarNovaSenha = require('../controllers/usuario/ativarNovaSenha');
 const solicitarAmizade = require('../controllers/usuario/solicitarAmizade');
 const getSolicitacoes = require('../controllers/usuario/getSolicitacoes');
 const getSolicitacao = require('../controllers/usuario/getSolicitacao');
+const aceitarSolicitacao = require('../controllers/usuario/aceitarSolicitacao');
+const userGetInfoPublic = require('../controllers/usuario/userGetInfoPublic');
+const hasSolicitacao = require('../controllers/usuario/hasSolicitacao');
+const getNotifications = require('../controllers/usuario/getNotifications');
+const setLidoTodos = require('../controllers/usuario/setLidoTodos');
 
 //middlewares
 const emailCheck = require('../middlewares/cadastro/emailCheck');
@@ -25,8 +30,12 @@ usuarioRouter.get('/esqueceuSenha/:token', ativarNovaSenha);
 usuarioRouter.get('/solicitarAmizade/:para', checkToken, solicitarAmizade);
 usuarioRouter.get('/getSolicitacoes', checkToken, getSolicitacoes);
 usuarioRouter.get('/getSolicitacao/:id', checkToken, getSolicitacao);
-usuarioRouter.get('/aceitarSolicitacao/:solicitacao', checkToken);
+usuarioRouter.get('/aceitarSolicitacao/:de', checkToken, aceitarSolicitacao);
 usuarioRouter.get('/recusarSolicitacao/:solicitacao', checkToken);
 usuarioRouter.get('/desfazerAmizade/:idUser', checkToken);
+usuarioRouter.get('/userGetInfoPublic/:id', checkToken, userGetInfoPublic);
+usuarioRouter.get('/hasSolicitacao/:id', checkToken, hasSolicitacao);
+usuarioRouter.get('/getNotifications', checkToken, getNotifications);
+usuarioRouter.get('/setLidoTodos', checkToken, setLidoTodos);
 
 module.exports = usuarioRouter;

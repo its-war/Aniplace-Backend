@@ -1,7 +1,6 @@
 require('dotenv-safe').config();
 const jwt = require('jsonwebtoken');
 const Usuario = require('../../models/Usuario');
-const Admin = require('../../models/Admin');
 
 module.exports.eAutorizado = (req, res) => {
     const token = req.headers['x-access-token'];
@@ -11,7 +10,7 @@ module.exports.eAutorizado = (req, res) => {
     jwt.verify(token, process.env.SECRET, (err, decoded) => {
         if(err) return res.send({auth: false});
         else{
-            let user = Usuario.findOne({chave: decoded.chave}).exec();
+            let user = Usuario.findOne({chave: decoded.chave}).populate('amigos', '_id nome foto', Usuario).exec();
             user.then((doc) => {
                 if(doc){
                     if(doc.ativo === 1 || doc.ativo === 2){
@@ -21,7 +20,8 @@ module.exports.eAutorizado = (req, res) => {
                             _id: doc._id,
                             fistname: doc.nome.split(' ')[0],
                             foto: doc.foto,
-                            ativo: doc.ativo
+                            ativo: doc.ativo,
+                            amigos: doc.amigos
                         }
                         let update = {
                             enabled: false,

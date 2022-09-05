@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     let senha  = req.body.senha;
     let lembrar = req.body.lembrar;
 
-    let user = Usuario.findOne({username: usuario}).exec();
+    let user = Usuario.findOne({username: usuario}).populate('amigos', '_id nome foto', Usuario).exec();
     user.then((doc) => {
         if(doc){
             if(bcrypt.compareSync(senha, doc.senha)){

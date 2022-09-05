@@ -6,7 +6,8 @@ module.exports = (req, res) => {
         for (let i = 0; i < docs.length; i++){
             user = {
                 _id: docs[i]._id,
-                nome: docs[i].nome
+                nome: docs[i].nome,
+                status: 0
             }
             users.push(user);
         }
