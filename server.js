@@ -74,6 +74,7 @@ const animeRouter = require('./src/routes/animeRouter');
 const rankRouter = require('./src/routes/rankRouter');
 const generoRouter = require('./src/routes/generoRouter');
 const episodioRouter = require('./src/routes/episodioRouter');
+const postagemRouter = require('./src/routes/postagemRouter');
 
 //Rotas Principais
 app.use('/login', loginRouter);
@@ -82,12 +83,13 @@ app.use('/destaque', checkToken, destaqueRouter);
 app.use('/anime', animeRouter);
 app.use('/genero', checkToken, generoRouter);
 app.use('/episodio', checkToken, episodioRouter);
+app.use('/postagem', checkToken, postagemRouter);
 
 //Middleware de erro do Express
 app.use((err, req, res, next) => {
+    console.log('Erro na API: ' + err.message);
     return res.json({
-        status: "Erro",
-        mensagem: err.message
+        status: "Erro"
     });
 });
 

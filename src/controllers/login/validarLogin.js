@@ -19,6 +19,7 @@ module.exports.eAutorizado = (req, res) => {
                         let user = {
                             _id: doc._id,
                             fistname: doc.nome.split(' ')[0],
+                            nome: doc.nome,
                             foto: doc.foto,
                             ativo: doc.ativo,
                             amigos: doc.amigos

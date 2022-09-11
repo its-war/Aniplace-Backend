@@ -8,6 +8,19 @@ module.exports = async (req, res) => {
         return res.send({amizade: false});
     }
 
+    if(id === req.userData._id){
+        return res.send({amizade: false});
+    }
+
+    await Usuario.findById(id).select('amigos -_id').then((user) => {
+        for(let i = 0; user.amigos.length; i++){
+            if(user.amigos[i] === req.userData._id){
+                console.log('entrou no if do for');
+                return res.send({amizade: false});
+            }
+        }
+    });
+
     let u1, u2, idNotification;
 
     await Usuario.findById(req.userData._id).select('amigos').then((user) => {
