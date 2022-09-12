@@ -29,7 +29,7 @@ module.exports = (req, res) => {
         user: {
             id: req.user._id,
             fistname: req.user.nome.split(' ')[0],
-            nome: req.userData.nome,
+            nome: req.user.nome,
             foto: req.user.foto,
             ativo: req.user.ativo,
             amigos: req.user.amigos

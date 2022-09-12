@@ -42,7 +42,13 @@ const AnimeSchema = new Schema({
     nota: {
         type: Number,
         default: 0
-    }
+    },
+    comentarios: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'comentario'
+        }
+    ]
 });
 
 AnimeSchema.plugin(mongoosePaginate);
