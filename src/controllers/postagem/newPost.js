@@ -1,5 +1,4 @@
 const Postagem = require('../../models/Postagem');
-const datahora = require('../../plugins/datahora');
 module.exports = async (req, res) => {
     if(req.file === undefined && req.body.texto === ''){
         return res.send({postagem: false});
@@ -13,7 +12,7 @@ module.exports = async (req, res) => {
             autor: req.userData._id,
             texto: texto,
             imagem: imagem,
-            registro: datahora.getData() + '—' + datahora.getHora()
+            registro: Date.now()
         }).then((postagem) => {
             if(postagem){
                 return res.send({postagem: true, post: postagem});
@@ -21,5 +20,5 @@ module.exports = async (req, res) => {
                 return res.send({postagem: false});
             }
         });
-    }, 5000);
+    }, 1000);
 }

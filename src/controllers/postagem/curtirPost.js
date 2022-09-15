@@ -8,10 +8,11 @@ module.exports = async (req, res) => {
     await Postagem.findById(id).select('curtidas').then((post) => {
         if(post){
             for(let i = 0; i < post.curtidas.length; i++){
-                if(post.curtidas[i] === req.userData._id){
+                if(post.curtidas[i].toString() === req.userData._id.toString()){
                     return res.send({curtida: false});
                 }
             }
+            post.markModified('curtidas');
             post.curtidas.unshift(req.userData._id);
             post.save();
             return res.send({curtida: true});

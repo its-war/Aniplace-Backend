@@ -27,6 +27,10 @@ const ComentarioSchema = new Schema({
     isResposta: {
         type: Boolean,
         default: false
+    },
+    registro: {
+        type: String,
+        require: true
     }
 });
 

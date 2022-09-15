@@ -47,12 +47,45 @@ module.exports = async (req, res) => {
             },
             {
                 path: 'comentarios',
-                model: Comentario
+                model: Comentario,
+                populate: [
+                    {
+                        path: 'autor',
+                        model: Usuario,
+                        select: 'nome foto'
+                    },
+                    {
+                        path: 'curtidas',
+                        model: Usuario,
+                        select: 'nome foto'
+                    },
+                    {
+                        path: 'respostas',
+                        model: Comentario,
+                        populate: [
+                            {
+                                path: 'autor',
+                                model: Usuario,
+                                select: 'nome foto'
+                            },
+                            {
+                                path: 'curtidas',
+                                model: Usuario,
+                                select: 'nome foto'
+                            }
+                        ]
+                    }
+                ]
             },
             {
                 path: 'postOrigem',
                 select: '_id texto imagem',
                 model: Postagem
+            },
+            {
+                path: 'curtidas',
+                model: Usuario,
+                select: 'nome foto'
             }
         ]
     }, (err, result) => {

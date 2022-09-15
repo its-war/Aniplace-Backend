@@ -8,8 +8,6 @@ module.exports = async (req, res) => {
     await Postagem.findById(id).select('curtidas').then((post) => {
         if(post){
             for(let i = 0; i < post.curtidas.length; i++){
-                console.log(post.curtidas[i].toString());
-                console.log(req.userData._id);
                 if(post.curtidas[i].toString() === req.userData._id.toString()){
                     post.markModified('curtidas');
                     post.curtidas.splice(i, 1);
@@ -17,6 +15,8 @@ module.exports = async (req, res) => {
                     return res.send({descurtir: true});
                 }
             }
+            return res.send({descurtir: false});
+        }else{
             return res.send({descurtir: false});
         }
     });

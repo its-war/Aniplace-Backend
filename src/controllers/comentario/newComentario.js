@@ -20,7 +20,8 @@ module.exports = async (req, res) => {
     if(tipo === 1){
         await Comentario.create({
             autor: req.userData._id,
-            texto: texto
+            texto: texto,
+            registro: Date.now()
         }).then((c) => {
             if(c){
                 Postagem.findById(id).select('comentarios').then((post) => {
@@ -38,7 +39,8 @@ module.exports = async (req, res) => {
     if(tipo === 2){
         await Comentario.create({
             autor: req.userData._id,
-            texto: texto
+            texto: texto,
+            registro: Date.now()
         }).then((c) => {
             if(c){
                 Anime.findById(id).select('comentarios').then((anime) => {
@@ -60,7 +62,8 @@ module.exports = async (req, res) => {
                     Comentario.create({
                         autor: req.userData._id,
                         texto: texto,
-                        isResposta: true
+                        isResposta: true,
+                        registro: Date.now()
                     }).then((c) => {
                         if(c){
                             cPai.markModified('respostas');
