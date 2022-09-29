@@ -10,7 +10,7 @@ module.exports.eAutorizado = (req, res) => {
     jwt.verify(token, process.env.SECRET, (err, decoded) => {
         if(err) return res.send({auth: false});
         else{
-            let user = Usuario.findOne({chave: decoded.chave}).populate('amigos', '_id nome foto', Usuario).exec();
+            let user = Usuario.findOne({chave: decoded.chave}).populate('amigos', '_id nome foto idSocket', Usuario).exec();
             user.then((doc) => {
                 if(doc){
                     if(doc.ativo === 1 || doc.ativo === 2){

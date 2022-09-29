@@ -3,16 +3,40 @@ const Fansub = require('../../models/Fansub');
 const Temporada = require('../../models/Temporada');
 const Episodio = require('../../models/Episodio');
 const Progresso = require('../../models/Progresso');
+const Comentario = require('../../models/Comentario');
+const Usuario = require('../../models/Usuario');
 module.exports = async (req, res) => {
     if(req.params.id.length !== 24){
         return res.send({anime: {isNotSet: true}});
     }
-    await Anime.findById(req.params.id).populate({
-        path: 'temporada', model: Temporada,
-        populate: [
-            {path: 'episodios', model: Episodio},
-            {path: 'fansubs', model: Fansub}]
-    }).populate('generos').then(async (anime) => {
+    await Anime.findById(req.params.id).populate([
+        {
+            path: 'temporada', model: Temporada,
+            populate: [
+                {path: 'episodios', model: Episodio},
+                {path: 'fansubs', model: Fansub}]
+        },
+        {
+            path: 'comentarios',
+            model: Comentario,
+            populate: [
+                {
+                    path: 'autor',
+                    model: Usuario,
+                    select: 'nome foto'
+                },
+                {
+                    path: 'respostas',
+                    model: Comentario
+                },
+                {
+                    path: 'curtidas',
+                    model: Usuario,
+                    select: 'nome foto'
+                }
+            ]
+        }
+    ]).populate('generos').then(async (anime) => {
         if(anime){
             let progresso;
             await Progresso.findOne({

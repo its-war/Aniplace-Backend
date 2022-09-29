@@ -8,7 +8,7 @@ const app = express();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
     cors: {
-        origin: "http://localhost:8080",
+        origin: ["http://localhost:8080", "http://192.168.0.15:8080"],
         methods: ["GET", "POST"],
         transports: ['websocket', 'polling'],
         credentials: true
@@ -76,6 +76,7 @@ const generoRouter = require('./src/routes/generoRouter');
 const episodioRouter = require('./src/routes/episodioRouter');
 const postagemRouter = require('./src/routes/postagemRouter');
 const comentarioRouter = require('./src/routes/comentarioRouter');
+const conversaRouter = require('./src/routes/conversaRouter');
 
 //Rotas Principais
 app.use('/login', loginRouter);
@@ -86,6 +87,7 @@ app.use('/genero', checkToken, generoRouter);
 app.use('/episodio', checkToken, episodioRouter);
 app.use('/postagem', checkToken, postagemRouter);
 app.use('/comentario', checkToken, comentarioRouter);
+app.use('/conversa', checkToken, conversaRouter);
 
 //Middleware de erro do Express
 app.use((err, req, res, next) => {
