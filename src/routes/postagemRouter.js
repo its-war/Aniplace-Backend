@@ -6,6 +6,7 @@ const curtirPost = require('../controllers/postagem/curtirPost');
 const getCurtidas = require('../controllers/postagem/getCurtidas');
 const descurtirPost = require('../controllers/postagem/descurtirPost');
 const deletePost = require('../controllers/postagem/deletePost');
+const getFeedUser = require('../controllers/postagem/getFeedUser');
 
 const upload = require('../middlewares/postagem/upload');
 
@@ -16,5 +17,6 @@ postagemRouter.get('/descurtirPost/:id', descurtirPost);
 postagemRouter.get('/getCurtidas/:id', getCurtidas);
 postagemRouter.get('/getPost/:id');
 postagemRouter.put('/deletePost', deletePost);
+postagemRouter.get('/getFeedUser/:pagina', getFeedUser);
 
 module.exports = postagemRouter;

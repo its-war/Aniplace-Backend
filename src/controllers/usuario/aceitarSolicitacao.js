@@ -8,51 +8,37 @@ module.exports = async (req, res) => {
         return res.send({amizade: false});
     }
 
-    if(id === req.userData._id){
+    if(id === req.userData._id.toString()){
         return res.send({amizade: false});
     }
 
-    await Usuario.findById(id).select('amigos -_id').then((user) => {
-        for(let i = 0; user.amigos.length; i++){
-            if(user.amigos[i] === req.userData._id){
-                console.log('entrou no if do for');
-                return res.send({amizade: false});
-            }
+    for(let i = 0; i < req.userData.amigos.length; i++){
+        if(req.userData.amigos[i]._id.toString() === id){
+            return res.send({amizade: true});
         }
-    });
+    }
 
-    let u1, u2, idNotification;
-
-    await Usuario.findById(req.userData._id).select('amigos').then((user) => {
-        if(!user){
+    await Usuario.findById(req.userData._id).select('amigos').then((u) => {//user logado
+        if(u){
+            u.markModified('amigos');
+            u.amigos.push(id);
+            u.save();
+        }else{
             return res.send({amizade: false});
         }
-        u1 = user;
     });
 
-    await Usuario.findById(id).select('amigos').then((user) => {
-        if(!user){
+    await Usuario.findById(id).select('amigos').then((u) => {//user que solicitou
+        if(u){
+            u.markModified('amigos');
+            u.amigos.push(req.userData._id);
+            u.save();
+        }else{
             return res.send({amizade: false});
         }
-        u2 = user;
     });
 
-    await Solicitacao.findOne({
-        de: id,
-        para: req.userData._id
-    }).select('status').then((solicitacao) => {
-        if(!solicitacao){
-            return res.send({amizade: false});
-        }
-        solicitacao.status = 1;
-        solicitacao.save();
-    });
-
-    u1.amigos.push(u2._id);
-    u2.amigos.push(u1._id);
-
-    await u1.save();
-    await u2.save();
+    let idNotification = null;
 
     await Notification.create({
         texto: '-$$$- aceitou sua solicitação de amizade.',
@@ -62,7 +48,7 @@ module.exports = async (req, res) => {
         metadado: req.userData._id
     }).then((notification) => {
         if(notification){
-            idNotification = notification._id
+            idNotification = notification._id;
         }
     });
 

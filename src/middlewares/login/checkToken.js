@@ -14,7 +14,11 @@ module.exports = async (req, res, next) => {
             //let novoToken = jwt.sign({chave: chave}, process.env.SECRET, {
             //expiresIn: '1h'
             //});
-            let user = Usuario.findOne({chave: decoded.chave}).exec();
+            let user = Usuario.findOne({chave: decoded.chave}).populate({
+                path: 'amigos',
+                select: 'chave',
+                model: Usuario
+            }).exec();
             user.then((doc) => {
                 if(doc){
                     req.userData = doc;
