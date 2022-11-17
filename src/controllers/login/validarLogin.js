@@ -16,13 +16,28 @@ module.exports.eAutorizado = (req, res) => {
                     if(doc.ativo === 1 || doc.ativo === 2){
                         doc.acessos++;
                         doc.save();
+
+                        let amigos = [];
+                        for(let i = 0; i < doc.amigos.length; i++){
+                            amigos.push({
+                                _id: doc.amigos[i]._id,
+                                nome: doc.amigos[i].nome,
+                                foto: doc.amigos[i].foto,
+                                idSocket: doc.amigos[i].idSocket,
+                                online: false
+                            });
+                            req.io.to(doc.amigos[i].idSocket).emit('vistoOnline', {
+                                idAmigo: doc._id
+                            });
+                        }
+
                         let user = {
                             _id: doc._id,
                             fistname: doc.nome.split(' ')[0],
                             nome: doc.nome,
                             foto: doc.foto,
                             ativo: doc.ativo,
-                            amigos: doc.amigos
+                            amigos: amigos
                         }
                         let update = {
                             enabled: false,

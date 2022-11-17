@@ -23,6 +23,21 @@ module.exports = (req, res) => {
             text: req.update.text
         }
     }
+
+    let amigos = [];
+    for(let i = 0; i < req.user.amigos.length; i++){
+        amigos.push({
+            _id: req.user.amigos[i]._id,
+            nome: req.user.amigos[i].nome,
+            foto: req.user.amigos[i].foto,
+            idSocket: req.user.amigos[i].idSocket,
+            online: false
+        });
+        req.io.to(req.user.amigos[i].idSocket).emit('vistoOnline', {
+            idAmigo: req.user._id
+        });
+    }
+
     return res.json({
         autorizado: true,
         token: token,
@@ -32,7 +47,7 @@ module.exports = (req, res) => {
             nome: req.user.nome,
             foto: req.user.foto,
             ativo: req.user.ativo,
-            amigos: req.user.amigos
+            amigos: amigos
         },
         msg: req.msg,
         update: update

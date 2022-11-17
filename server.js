@@ -65,6 +65,11 @@ app.get('/notification/aceitarSolicitacao/:para/:notification', checkToken, (req
     res.send({amizade: true});
 });
 
+app.use((req, res, next) => {
+    req.io = io;
+    next();
+});
+
 //Importações de Roteadores
 const adminRouter = require('./src/routes/adminRouter');
 const loginRouter = require('./src/routes/loginRouter');

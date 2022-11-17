@@ -24,7 +24,14 @@ module.exports = async (req, res) => {
         }
     ]).then((conversa) => {
         if(conversa){
-            return res.send({conversa: conversa});
+            let c = {
+                _id: conversa._id,
+                mensagens: conversa.mensagens,
+                participantes: conversa.participantes,
+                ativo: false,
+                position: 0
+            }
+            return res.send({conversa: c});
         }else{
             return res.send({conversa: null});
         }

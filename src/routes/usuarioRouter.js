@@ -14,6 +14,7 @@ const userGetInfoPublic = require('../controllers/usuario/userGetInfoPublic');
 const hasSolicitacao = require('../controllers/usuario/hasSolicitacao');
 const getNotifications = require('../controllers/usuario/getNotifications');
 const setLidoTodos = require('../controllers/usuario/setLidoTodos');
+const desfazerAmizade = require('../controllers/usuario/desfazerAmizade');
 
 //middlewares
 const emailCheck = require('../middlewares/cadastro/emailCheck');
@@ -32,7 +33,7 @@ usuarioRouter.get('/getSolicitacoes', checkToken, getSolicitacoes);
 usuarioRouter.get('/getSolicitacao/:id', checkToken, getSolicitacao);
 usuarioRouter.get('/aceitarSolicitacao/:de', checkToken, aceitarSolicitacao);
 usuarioRouter.get('/recusarSolicitacao/:solicitacao', checkToken);
-usuarioRouter.get('/desfazerAmizade/:idUser', checkToken);
+usuarioRouter.get('/desfazerAmizade/:id', checkToken, desfazerAmizade);
 usuarioRouter.get('/userGetInfoPublic/:id', checkToken, userGetInfoPublic);
 usuarioRouter.get('/hasSolicitacao/:id', checkToken, hasSolicitacao);
 usuarioRouter.get('/getNotifications', checkToken, getNotifications);

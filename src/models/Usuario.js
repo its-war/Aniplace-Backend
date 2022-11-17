@@ -81,6 +81,10 @@ const UserSchema = new Schema({
     idSocket: {
         type: String,
         default: ''
+    },
+    online: {
+        type: Boolean,
+        default: false
     }
 });
 

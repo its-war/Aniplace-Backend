@@ -2,15 +2,36 @@ const Usuario = require('../models/Usuario');
 const Conversa = require('../models/Conversa');
 const Mensagem = require('../models/Mensagem');
 module.exports = (io) => {
-    io.on('connection', (socket) => {
+    io.on('connection', async (socket) => {
         socket.emit('firstConnection', {socket: socket.id});
 
         socket.on('saveIdSocket', (data) => {
-            Usuario.findById(data.id).then((user) => {
+            Usuario.findById(data.id).populate({
+                path: 'amigos',
+                model: Usuario
+            }).then((user) => {
                 user.markModified('idSocket');
+                user.markModified('online');
                 user.idSocket = socket.id;
+                user.online = true;
                 user.save();
-                console.log(socket.id);
+                for(let i = 0; i < user.amigos.length; i++){
+                    socket.to(user.amigos[i].idSocket).emit('vistoOnline', {
+                        idAmigo: user._id,
+                        resend: true
+                    });
+                }
+            });
+        });
+
+        socket.on('amigoOnline', async (data) => {
+            await Usuario.findById(data.to).select('idSocket').then((u) => {
+                if(u){
+                    socket.to(u.idSocket).emit('vistoOnline', {
+                        idAmigo: data.from,
+                        resend: false
+                    });
+                }
             });
         });
 
@@ -48,6 +69,42 @@ module.exports = (io) => {
                                 });
                             });
                         }
+                    });
+                }
+            });
+        });
+
+        socket.on('disconnect', async () => {
+            await Usuario.findOne({idSocket: socket.id}).populate({
+                path: 'amigos',
+                model: Usuario
+            }).then((user) => {
+                if(user){
+                    user.markModified('idSocket');
+                    user.markModified('online');
+                    user.idSocket = '';
+                    user.online = false;
+                    user.save();
+                    for(let i = 0; i < user.amigos.length; i++){
+                        if(user.amigos[i].idSocket !== ''){
+                            socket.to(user.amigos[i].idSocket).emit('offline', {
+                                idAmigo: user._id
+                            });
+                        }
+                    }
+                }
+            });
+        });
+
+        socket.on('avisoOnlineUser', async (data) => {
+            console.log('user ' + socket.id);
+            Usuario.findById(data.id).populate({
+                path: 'amigos',
+                model: Usuario
+            }).then((user) => {
+                for(let i = 0; i < user.amigos.length; i++){
+                    socket.to(user.amigos[i].idSocket).emit('reVistoOnline', {
+                        idAmigo: user._id
                     });
                 }
             });

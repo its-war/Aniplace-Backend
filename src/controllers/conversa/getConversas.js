@@ -32,7 +32,19 @@ module.exports = async (req, res) => {
             }
             conversas[i].mensagens = mensagens;
         }
-        return res.send({conversas: conversas});
+
+        let c = [];
+        for(let i = 0; i < conversas.length; i++){
+            c.push({
+                _id: conversas[i]._id,
+                mensagens: conversas[i].mensagens,
+                participantes: conversas[i].participantes,
+                ativo: false,
+                position: 0
+            });
+        }
+
+        return res.send({conversas: c});
     }).catch(() => {
         return res.send({conversas: []});
     });
