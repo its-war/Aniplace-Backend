@@ -109,5 +109,17 @@ module.exports = (io) => {
                 }
             });
         });
+
+        socket.on('visualizarMsg', async (data) => {
+            await Conversa.findById(data.idConversa).select('mensagens').then((c) => {
+                Mensagem.updateMany({
+                    _id: c.mensagens
+                }, {visto: true}).then( async() => {
+                    await Usuario.findById(data.idUser).then((u) => {
+                        socket.to(u.idSocket).emit('mensagemVista');
+                    });
+                });
+            });
+        });
     });
 }
