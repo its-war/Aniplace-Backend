@@ -28,29 +28,34 @@ module.exports = async (req, res) => {
         }
     });
 
-    await Usuario.findById(id).select('amigos').then((u) => {//user que solicitou
+    let user = null;
+    await Usuario.findById(id).select('amigos idSocket').then((u) => {//user que solicitou
         if(u){
             u.markModified('amigos');
             u.amigos.push(req.userData._id);
             u.save();
+            user = u;
         }else{
             return res.send({amizade: false});
         }
     });
 
-    let idNotification = null;
+    await Solicitacao.updateOne({de: id, para: req.userData._id}, {status: 1}).exec();
 
-    await Notification.create({
-        texto: '-$$$- aceitou sua solicitação de amizade.',
-        registro: datahora.getData() + '-' + datahora.getHora(),
+    await (await Notification.create({
+        registro: Date.now(),
+        de: req.userData._id,
         para: id,
-        action: 1,
-        metadado: req.userData._id
-    }).then((notification) => {
+        action: 1
+    })).populate({
+            path: 'de',
+            select: 'nome foto',
+            model: Usuario
+        }
+    ).then((notification) => {
         if(notification){
-            idNotification = notification._id;
+            req.io.to(user.idSocket).emit('newNotification', {notification: notification});
+            res.send({amizade: true});
         }
     });
-
-    res.redirect('/notification/aceitarSolicitacao/' + id + '/' + idNotification);
 }

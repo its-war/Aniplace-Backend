@@ -4,10 +4,6 @@ const ObjectId = Schema.ObjectId;
 
 const NotificationSchema = new Schema({
     idNotification: ObjectId,
-    texto: {
-        type: String,
-        require: true
-    },
     registro: {
         type: String,
         require: true
@@ -15,6 +11,10 @@ const NotificationSchema = new Schema({
     status: {
         type: Number,
         default: 0
+    },
+    de: {
+        type: Schema.Types.ObjectId,
+        ref: 'usuario'
     },
     para: {
         type: Schema.Types.ObjectId,
@@ -25,13 +25,27 @@ const NotificationSchema = new Schema({
         require: true
     },
     /*
-    * ACTIONS
-    * 1 - quando for clicado nessa notificação, o frontend deve abrir o perfil do usuário que aceitou a solicitação
+    * ACTIONS - representa o tipo de notificação
+    * 1 - solicitação de amizade aceita
     * */
-    metadado: {
-        type: String,
-        default: ''
+    dataPost: {
+        type: Schema.Types.ObjectId,
+        ref: 'postagem'
+    },
+    dataComment: {
+        type: Schema.Types.ObjectId,
+        ref: 'comentario'
+    },
+    dataAnime: {
+        type: Schema.Types.ObjectId,
+        ref: 'anime'
     }
+    /*
+    * Os campos 'data' são para suprir todos os tipos de notificações
+    * Comentários em animes e posts
+    * Curtidas e compartilhamentos de posts
+    * Solicitações de amizade aceitas (nesse caso, não será usando nenhum dos 'data' acima)
+    */
 });
 
 mongoose.model('notification', NotificationSchema);

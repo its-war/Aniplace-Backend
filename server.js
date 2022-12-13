@@ -49,22 +49,6 @@ app.get('/notification/solicitacao/:para/:idSolicitacao', checkToken, (req, res)
     res.send({solicitacao: true});
 });
 
-app.get('/notification/aceitarSolicitacao/:para/:notification', checkToken, (req, res) => {
-    let para = req.params.para;
-    let notification = req.params.notification;
-    Usuario.findById(para).select('idSocket').then((user) => {
-        if(user){
-            Notification.findById(notification).then((notification) => {
-                Usuario.findById(notification.metadado).select('nome').then((u) => {
-                    notification.texto = notification.texto.replace('-$$$-', u.nome);
-                    io.to(user.idSocket).emit('newNotification', {notification: notification});
-                });
-            });
-        }
-    });
-    res.send({amizade: true});
-});
-
 app.use((req, res, next) => {
     req.io = io;
     next();
