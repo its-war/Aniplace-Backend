@@ -7,12 +7,13 @@ module.exports = async (req, res) => {
 
     await Solicitacao.findOne({
         de: req.userData._id,
-        para: id
+        para: id,
+        status: 0
     }).select('_id').then((solicitacao) => {
         if(solicitacao){
             return res.send({hasSolicitacao: true});
         }else{
-            return res.send({hasSolicitacao: false});
+            return res.send({hasSolicitacao: false, option: 1});
         }
     });
 }

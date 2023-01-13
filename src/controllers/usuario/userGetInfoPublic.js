@@ -5,7 +5,7 @@ module.exports = async (req, res) => {
         return res.send({user: {}});
     }
 
-    await Usuario.findById(id).select('nome foto -_id').then((user) => {
+    await Usuario.findById(id).select('nome foto registro apelido nascimento sexo pronome animeFavorito localidade biografia amigos online').then((user) => {
         return res.send({user: user});
     });
 }

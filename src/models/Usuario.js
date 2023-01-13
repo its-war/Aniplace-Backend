@@ -32,6 +32,10 @@ const UserSchema = new Schema({
         type: String,
         default: null
     },
+    capa: {
+        type: String,
+        default: null
+    },
     ativo: {
         type: Number,
         default: 0
@@ -64,9 +68,13 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'anime'
     },
-    localidade: {
+    estado: {
         type: String,
-        default: ''
+        default: null
+    },
+    cidade: {
+        type: String,
+        default: null
     },
     biografia: {
         type: String,
@@ -85,6 +93,10 @@ const UserSchema = new Schema({
     online: {
         type: Boolean,
         default: false
+    },
+    fistLogin: {
+        type: Boolean,
+        default: true
     }
 });
 

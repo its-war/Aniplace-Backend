@@ -47,7 +47,8 @@ module.exports = (req, res) => {
             nome: req.user.nome,
             foto: req.user.foto,
             ativo: req.user.ativo,
-            amigos: amigos
+            amigos: amigos,
+            fistLogin: req.user.fistLogin
         },
         msg: req.msg,
         update: update

@@ -35,9 +35,19 @@ module.exports.eAutorizado = (req, res) => {
                             _id: doc._id,
                             fistname: doc.nome.split(' ')[0],
                             nome: doc.nome,
+                            username: doc.username,
+                            registro: doc.registro,
+                            apelido: doc.apelido,
+                            nascimento: doc.nascimento,
+                            sexo: doc.sexo,
+                            pronome: doc.pronome,
+                            animeFavorito: doc.animeFavorito,
+                            localidade: doc.localidade,
+                            biografia: doc.biografia,
                             foto: doc.foto,
                             ativo: doc.ativo,
-                            amigos: amigos
+                            amigos: amigos,
+                            fistLogin: doc.fistLogin
                         }
                         let update = {
                             enabled: false,
